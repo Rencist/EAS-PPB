@@ -12,7 +12,7 @@ class MoviziesDatabase {
   Future<Database?> get database async {
     if (_database != null) return _database;
 
-    _database = await _initDB('movizies2.db');
+    _database = await _initDB('movizies.db');
     return _database!;
   }
 
@@ -38,11 +38,11 @@ class MoviziesDatabase {
     ''');
   }
 
-  Future<Movizy> create(Movizy note) async {
+  Future<Movizy> create(Movizy movizy) async {
     final db = await instance.database;
 
-    final id = await db?.insert(tableMovizies, note.toJson());
-    return note.copy(id: id);
+    final id = await db?.insert(tableMovizies, movizy.toJson());
+    return movizy.copy(id: id);
   }
 
   Future<Movizy> readMovizy(int id) async {
@@ -66,11 +66,11 @@ class MoviziesDatabase {
     return result!.map((json) => Movizy.fromJson(json)).toList();
   }
 
-  Future<Future<int>?> update(Movizy note) async {
+  Future<Future<int>?> update(Movizy movizy) async {
     final db = await instance.database;
 
-    return db?.update(tableMovizies, note.toJson(),
-        where: '${MovizyFields.id} = ?', whereArgs: [note.id]);
+    return db?.update(tableMovizies, movizy.toJson(),
+        where: '${MovizyFields.id} = ?', whereArgs: [movizy.id]);
   }
 
   Future<int?> delete(int id) async {
